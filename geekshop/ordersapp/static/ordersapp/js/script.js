@@ -96,6 +96,12 @@ window.onload = function () {
         if (orderitem_product_pk){
             $.ajax({
                 url: `/orders/product/${orderitem_product_pk}/price/`,
+                localCache: true,
+                cacheTTL: 1,
+                isCacheValid: function(data){
+                    return true;
+                },
+
                 success: function (data) {
                     if (data.price){
                         price_arr[orderitem_num] = parseFloat(data.price);
