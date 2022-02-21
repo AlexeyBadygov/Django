@@ -65,6 +65,10 @@ window.onload = function () {
        prefix: 'orderitems',
        removed: deleteOrderItem
     });
+    $('.add-row').on('click', function() {
+        quantity_arr.push(0);
+        price_arr.push(0);
+    })
 
     if(!order_total_quantity){
         orderSummaryRecalc();
@@ -92,6 +96,12 @@ window.onload = function () {
         if (orderitem_product_pk){
             $.ajax({
                 url: `/orders/product/${orderitem_product_pk}/price/`,
+                localCache: true,
+                cacheTTL: 1,
+                isCacheValid: function(data){
+                    return true;
+                },
+
                 success: function (data) {
                     if (data.price){
                         price_arr[orderitem_num] = parseFloat(data.price);
